@@ -30,7 +30,7 @@
 
                         <div class="card__actions">
 
-                            <a href="/<%= exhibition.id %> " class="btn">Edit</a>
+                            <a href="/admin/edit-exhibition/<%= exhibition.id %>?edit=true" class="btn">Edit</a>
                             
                             <form action="/delete-exhibition" method="POST">
                                 <button class="btn" type="submit">Delete</button>

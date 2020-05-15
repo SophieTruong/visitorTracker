@@ -8,8 +8,4 @@ const router = express.Router();
 
 router.get('/',exhibitionsController.getExhibition);
 
-router.get('/:exhibitionId',exhibitionsController.getEx);
-
-
-
 module.exports = router;

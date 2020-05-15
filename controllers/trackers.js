@@ -11,11 +11,3 @@ exports.getTrackers =  (req, res, next) => {
     });
 };
 
-exports.getTracker = (req, res, next) => {
-  const id = req.params.trackerId;
-  Tracker.findbyId(id,tracker =>{
-    console.log(tracker);
-  });
-  res.redirect('/trackers/all-trackers');
-}
-

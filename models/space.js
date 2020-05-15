@@ -18,24 +18,35 @@ const getSpacesFromFile = cb =>{
 };
 
 module.exports = class Space{
-    constructor(name,spaceID){
+    constructor(id, name,spaceID,imageUrl){
+        this.id = id;
         this.name = name;
         this.spaceID = spaceID;
-
+        this.imageUrl=imageUrl;
     }
     save(){
-        this.id = Math.random().toString();
         getSpacesFromFile(spaces => {
-            spaces.push(this);
-            fs.writeFile(p, JSON.stringify(spaces), err =>{
-                console.log(err);
-            });
+            if (this.id){
+                const existingSpaceIndex = spaces.findIndex(spc => spc.id === this.id);
+                const updatedSpaces = [...spaces];
+                updatedSpaces[existingSpaceIndex] = this;
+                fs.writeFile(p, JSON.stringify(updatedSpaces), err =>{
+                    console.log(err);
+                });
+            } else {
+                this.id = Math.random().toString();
+                spaces.push(this);
+                fs.writeFile(p, JSON.stringify(spaces), err =>{
+                    console.log(err);
+                });
+            }
         });
     }
 
     static fetchAll(cb){
         getSpacesFromFile(cb);
     };
+
 
     static findbyId(id,cb){
         getSpacesFromFile(spaces=>{

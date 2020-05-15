@@ -18,19 +18,29 @@ const getTrackersFromFile = cb =>{
 };
 
 module.exports = class Tracker{
-    constructor(name,UUID){
+    constructor(id,name,UUID){
+        this.id = id;
         this.name = name;
         this.UUID = UUID;
 
     }
     save(){
-        this.id = Math.random().toString();
-        console.log(this.id);
         getTrackersFromFile(trackers => {
-            trackers.push(this);
-            fs.writeFile(p, JSON.stringify(trackers), err =>{
-                console.log(err);
-            });
+            if(this.id){
+                const existingTrackerIndex = trackers.findIndex(tracker => tracker.id === this.id);
+                const updatedTrackers = [...trackers];
+                updatedTrackers[existingTrackerIndex] = this;
+                fs.writeFile(p, JSON.stringify(updatedTrackers), err =>{
+                    console.log(err);
+                });
+                console.log(updatedTrackers)
+            } else {
+                this.id = Math.random().toString();
+                trackers.push(this);
+                fs.writeFile(p, JSON.stringify(trackers), err =>{
+                    console.log(err);
+                });
+            }
         });
     }
 
