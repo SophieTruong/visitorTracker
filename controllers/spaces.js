@@ -13,7 +13,6 @@ exports.getSpaces =  (req, res, next) => {
 // reach 1 space
 exports.getSpace = (req, res, next) => {
   const space_id = req.params.spaceId;
-  console.log(space_id);
   Space.findbyId(space_id,space =>{
     console.log(space);
   });
