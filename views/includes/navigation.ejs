@@ -1,0 +1,59 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Exhibitions</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-exhibition' ? 'active' : '' %>" href="/admin/add-exhibition">Add Exhibition</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/all-space' ? 'active' : '' %>" href="/spaces/all-space">Spaces</a>
+            </li>
+            
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-space' ? 'active' : '' %>" href="/admin/add-space">Add Space</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/all' ? 'active' : '' %>" href="/trackers/all-trackers">Trackers</a>
+            </li>
+
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-tracker' ? 'active' : '' %>" href="/admin/add-tracker">Add Tracker</a>
+            </li>
+
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <ul class="mobile-nav__item-list">
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Exhibitions</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/add-exhibition' ? 'active' : '' %>" href="/admin/add-exhibition">Add Exhibition</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/all-space' ? 'active' : '' %>" href="/spaces/all-space">Spaces</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/add-space' ? 'active' : '' %>" href="/admin/add-space">Add Space</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/all' ? 'active' : '' %>" href="/trackers/all-trackers">Trackers</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/add-tracker' ? 'active' : '' %>" href="/admin/add-tracker">Add Tracker</a>
+            </li>
+    </ul>
+    </ul>
+
+</nav>

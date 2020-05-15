@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/space.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (trks.length > 0) { %>
+            <div class="grid">
+                <% for (let tracker of trks) { %>
+                    <article class="card space-item">
+                        <header class="card__header">
+                            <h1 class="space__title"><%= tracker.name %></h1>
+                        </header>
+                        
+                        <div class="card__content">
+                            <p class="space__description">UUID: <%= tracker.UUID %></p>
+                        </div>
+
+                        <div class="card__image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Raspberry_Pi_4_Model_B_-_Top.jpg/2560px-Raspberry_Pi_4_Model_B_-_Top.jpg"
+                                alt="Raspberry Pi" height= 200 px >
+                        </div>
+
+                        <div class="card__actions">
+
+                            <a href="/trackers/<%= tracker.id %> " class="btn">Edit</a>
+                            
+                            <form action="/trackers/delete-tracker" method="POST">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+
+                            <form action="/test-view" method="POST">
+                                <button class="btn">Test view</button>
+                            </form>
+
+                        </div>
+
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>No Tracker Found!</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>
