@@ -11,11 +11,3 @@ exports.getExhibition = (req,res,next) =>{
           });  
     });
 };
-
-exports.getEx = (req, res, next) => {
-    const id = req.params.exhibitionId;
-    Exhibition.findbyId(id,exhibition =>{
-      console.log(exhibition);
-    });
-    res.redirect('/');
-  }

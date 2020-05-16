@@ -12,7 +12,7 @@
                     <article class="card space-item">
                         
                         <header class="card__header">
-                            <h1 class="space__title"><%= space.spaceName %></h1>
+                            <h1 class="space__title"><%= space.name %></h1>
                         </header>
 
                         <div class="card__content">
@@ -26,13 +26,14 @@
 
                         <div class="card__actions">
 
-                            <a href="/spaces/<%= space.id%>" class="btn">Edit</a>
+                            <a href="/admin/edit-space/<%= space.id%>?edit=true" class="btn">Edit</a>
                             
-                            <form action="/spaces/delete-space" method="POST">
+                            <form action="/admin/delete-space" method="POST">
+                                <input type = "hidden" value = "<%=space.id%>" name = "spcID">
                                 <button class="btn" type="submit">Delete</button>
                             </form>
 
-                            <form action="/spaces/test-view" method="POST">
+                            <form action="/spaces/test-view" method="GET">
                                 <button class="btn">Test view</button>
                             </form>
 

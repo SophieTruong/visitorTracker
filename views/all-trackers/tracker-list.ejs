@@ -25,13 +25,14 @@
 
                         <div class="card__actions">
 
-                            <a href="/trackers/<%= tracker.id %> " class="btn">Edit</a>
+                            <a href="/admin/edit-tracker/<%= tracker.id%>?edit=true" class="btn">Edit</a>
                             
-                            <form action="/trackers/delete-tracker" method="POST">
+                            <form action="/admin/delete-tracker" method="POST">
+                                <input type = "hidden" value = "<%=tracker.id%>" name = "trckId">
                                 <button class="btn" type="submit">Delete</button>
                             </form>
 
-                            <form action="/test-view" method="POST">
+                            <form action="/test-view" method="GET">
                                 <button class="btn">Test view</button>
                             </form>
 
