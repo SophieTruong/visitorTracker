@@ -44,12 +44,21 @@ module.exports = class Tracker{
         });
     }
 
+    static deleteById(id){
+        getTrackersFromFile(trackers=>{
+            const updatedTrackers = trackers.filter(tracker => tracker.id !== id);
+            fs.writeFile(p, JSON.stringify(updatedTrackers), err =>{
+                console.log(err);
+            });
+        });
+    }
+
     static fetchAll(cb){
         getTrackersFromFile(cb);
     };
 
     static findbyId(id,cb){
-        getTrackersFromFile(trackers=>{
+        (trackers=>{
             const tracker = trackers.find(p => p.id === id)
             cb(tracker);
         });

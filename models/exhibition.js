@@ -45,6 +45,15 @@ module.exports = class Exhibition{
         });
     }
 
+    static deleteById(id){
+        getExhibitionsFromFile(exhibitions=>{
+            const updatedExhibitions = exhibitions.filter(exh => exh.id !== id);
+            fs.writeFile(p, JSON.stringify(updatedExhibitions), err =>{
+                console.log(err);
+            });
+        });
+    }
+
     static fetchAll(cb){
         getExhibitionsFromFile(cb);
     };

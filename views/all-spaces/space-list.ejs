@@ -28,11 +28,12 @@
 
                             <a href="/admin/edit-space/<%= space.id%>?edit=true" class="btn">Edit</a>
                             
-                            <form action="/spaces/delete-space" method="POST">
+                            <form action="/admin/delete-space" method="POST">
+                                <input type = "hidden" value = "<%=space.id%>" name = "spcID">
                                 <button class="btn" type="submit">Delete</button>
                             </form>
 
-                            <form action="/spaces/test-view" method="POST">
+                            <form action="/spaces/test-view" method="GET">
                                 <button class="btn">Test view</button>
                             </form>
 

@@ -56,9 +56,14 @@ exports.postEditSpace = (req,res,next) =>{
     updatedImageUrl
     );
   updatedSpace.save();
+  console.log(updatedSpace);
   res.redirect("/spaces/all-space");
-;
+};
 
+exports.postDeleteSpace = (req,res,next) =>{
+  const spaceID = req.body.spcID;
+  Space.deleteById(spaceID);
+  res.redirect("/spaces/all-space");
 }
 
 /* ..... EXHIBITION .....*/
@@ -84,13 +89,11 @@ exports.postAddExhibition = (req, res, next) => {
 
 exports.getEditExhibition = (req, res, next) => {
   const editMode = req.query.edit;
-  console.log(editMode);
   if (!editMode){
     return res.redirect('/error');
   }
   const exhibitionID = req.params.exhibitionID;
   Exhibition.findbyId(exhibitionID, exhibition =>{
-    console.log(exhibition);
     if (!exhibition){
       return res.redirect('/error');
     }
@@ -115,9 +118,17 @@ exports.postEditExhibition = (req,res,next) =>{
     updatedEndDate
   );
   updatedExhibition.save();
+  console.log(updatedExhibition)
   res.redirect("/")
   
 }
+
+exports.postDeleteExhibition = (req,res,next) =>{
+  const exhId = req.body.exhId;
+  Exhibition.deleteById(exhId);
+  res.redirect("/");
+}
+
 /* ..... TRACKER .....*/
 
 exports.getAddTracker = (req, res, next) => {
@@ -139,13 +150,11 @@ exports.postAddTracker = (req, res, next) => {
 
 exports.getEditTracker = (req, res, next) => {
   const editMode = req.query.edit;
-  console.log(editMode);
   if (!editMode){
     return res.redirect('/error');
   }
   const trackerID = req.params.trackerID;
   Tracker.findbyId(trackerID, tracker =>{
-    console.log(tracker);
     if (!tracker){
       return res.redirect('/');
     }
@@ -168,5 +177,12 @@ exports.postEditTracker =(req, res, next) => {
     updatedUUID
   );
   updatedTracker.save();
+  console.log(updatedTracker);
   res.redirect("/trackers/all-trackers");
 };
+
+exports.postDeleteTracker = (req,res,next) =>{
+  const trckId = req.body.trckId;
+  Tracker.deleteById(trckId);
+  res.redirect("/trackers/all-trackers");
+}

@@ -43,6 +43,15 @@ module.exports = class Space{
         });
     }
 
+    static deleteById(id){
+        getSpacesFromFile(spaces=>{
+            const updatedSpaces = spaces.filter(spc => spc.id !== id);
+            fs.writeFile(p, JSON.stringify(updatedSpaces), err =>{
+                console.log(err);
+            });
+        });
+    }
+
     static fetchAll(cb){
         getSpacesFromFile(cb);
     };
