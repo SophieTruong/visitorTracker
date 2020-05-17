@@ -1,8 +1,8 @@
 /// allow admin actions: CRUD
 
 const Space = require('../models/space');
-// const Exhibition = require('../models/exhibition');
-// const Tracker = require('../models/tracker');
+const Exhibition = require('../models/exhibition');
+const Tracker = require('../models/tracker');
 
 /* ..... SPACE .....*/
 exports.getAddSpace = (req, res, next) => {

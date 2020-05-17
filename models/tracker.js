@@ -2,8 +2,7 @@
 const getDb = require('../utils/database').getDb;
 
 class Tracker{
-    constructor(id,name,UUID){
-    this.id = id;
+    constructor(name,UUID){
     this.name = name;
     this.UUID = UUID;
     }

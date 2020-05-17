@@ -1,8 +1,7 @@
 const getDb = require('../utils/database').getDb;
 
 class Exhibition{
-    constructor(id, name, startDate, endDate){
-        this.id = id;
+    constructor(name, startDate, endDate){
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
