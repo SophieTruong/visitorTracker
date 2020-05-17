@@ -1,8 +1,8 @@
 /// allow admin actions: CRUD
 
 const Space = require('../models/space');
-const Exhibition = require('../models/exhibition');
-const Tracker = require('../models/tracker');
+// const Exhibition = require('../models/exhibition');
+// const Tracker = require('../models/tracker');
 
 /* ..... SPACE .....*/
 exports.getAddSpace = (req, res, next) => {
@@ -27,7 +27,7 @@ exports.postAddSpace = (req, res, next) => {
       })
       .catch(err =>{
         console.log(err);
-      })
+      });
 };
 
 // exports.getEditSpace = (req, res, next) => {
@@ -84,7 +84,7 @@ exports.postAddExhibition = (req, res, next) => {
   const endDate = req.body.endDate;
 
 
-  const exhibition = new Exhibition(null,name,startDate,endDate);
+  const exhibition = new Exhibition(name,startDate,endDate);
   //console.log(space);
   exhibition
   .save()
@@ -146,7 +146,7 @@ exports.getAddTracker = (req, res, next) => {
 exports.postAddTracker = (req, res, next) => {
   const name = req.body.name;
   const UUID = req.body.UUID;
-  const tracker = new Tracker(null,name, UUID);
+  const tracker = new Tracker(name, UUID);
   //console.log(space);
   tracker
   .save()
@@ -190,5 +190,12 @@ exports.postAddTracker = (req, res, next) => {
 //     updatedUUID
 //   );
 //   updatedTracker.save();
+//   console.log(updatedTracker);
 //   res.redirect("/trackers/all-trackers");
 // };
+
+// exports.postDeleteTracker = (req,res,next) =>{
+//   const trckId = req.body.trckId;
+//   Tracker.deleteById(trckId);
+//   res.redirect("/trackers/all-trackers");
+// }

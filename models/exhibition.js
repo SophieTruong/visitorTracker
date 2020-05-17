@@ -37,17 +37,6 @@ class Exhibition{
 module.exports = Exhibition;
 
 
-
-
-
-
-
-
-
-
-
-
-
 // const fs = require('fs');
 // const path = require('path');
 

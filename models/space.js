@@ -1,46 +1,40 @@
-
 const getDb = require('../utils/database').getDb;
 
 class Space{
-    constructor(id, name,spaceID,imageUrl){
-        this.id = id;
+    constructor(name,spaceID,imageUrl){
         this.name = name;
         this.spaceID = spaceID;
         this.imageUrl=imageUrl;
     }
     save(){
         const db = getDb();
-        return db.collection('spaces')
-            .insertOne(this)
-            .then(result=>{
-                console.log(result);
-            })
-            .catch(err =>{
-                console.log(err);
-            });
-
-    }
-    static fetchAll(){
-        const db = getDb();
         return db
         .collection('spaces')
-        .find()
-        .toArray()
-        .then(spaces=>{
-            console.log(spaces);
-            return spaces;
+        .insertOne(this)
+        .then(result =>{
+            console.log(result);
         })
         .catch(err =>{
             console.log(err);
-        });
+        })
     }
+    static fetchAll() {
+        const db = getDb();
+        return db
+          .collection('spaces')
+          .find()
+          .toArray()
+          .then(spaces => {
+            console.log(spaces);
+            return spaces;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
 }
+
 module.exports = Space;
-
-
-
-
-
 
 
 
@@ -106,6 +100,15 @@ module.exports = Space;
 //                     console.log(err);
 //                 });
 //             }
+//         });
+//     }
+
+//     static deleteById(id){
+//         getSpacesFromFile(spaces=>{
+//             const updatedSpaces = spaces.filter(spc => spc.id !== id);
+//             fs.writeFile(p, JSON.stringify(updatedSpaces), err =>{
+//                 console.log(err);
+//             });
 //         });
 //     }
 

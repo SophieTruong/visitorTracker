@@ -32,7 +32,8 @@
 
                             <a href="/admin/edit-exhibition/<%= exhibition.id %>?edit=true" class="btn">Edit</a>
                             
-                            <form action="/delete-exhibition" method="POST">
+                            <form action="/admin/delete-exhibition" method="POST">
+                                <input type = "hidden" value = "<%=exhibition.id%>" name = "exhId">
                                 <button class="btn" type="submit">Delete</button>
                             </form>
 
