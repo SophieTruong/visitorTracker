@@ -37,9 +37,8 @@ app.get('/tracker/api/', function (req, res) {
 	while (image == 0) {
 	    ;
 	}
-	// after image is recived we should return page with the image
-    }
-        
+	// after image is recived we should return page with the image here
+    }        
 });
 
 var multer = require('multer');
