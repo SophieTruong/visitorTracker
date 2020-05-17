@@ -26,36 +26,42 @@ app.use('/trackers',trackerRoutes);
 
 // API for the database
 app.use(bodyParser.json())
-var message = {"msg":"setup"};
+var message = {"msg":"preview"};
 var image = 0;
 
 app.get('/tracker/api/', function (req, res) {
     console.log(req.body);
     if (req.body.action == 'tracker-preview') {
 	message = {"msg":"preview"};
+	image = 0;
 	while (image == 0) {
 	    ;
 	}
 	// after image is recived we should return page with the image
-	image = 0;
     }
         
 });
 
-app.post('/tracker/api/', function (req, res) {
-    console.log(req.body);
-    if (req.body.msg == 'preview') {
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+	cb(null, './previews/')
+    },
+    filename: function (req, file, cb) {
+	cb(null, file.originalname)
+    }
+});
+var upload = multer({ storage: storage });
+
+app.post('/tracker/api/', upload.single('file'),  function (req, res) {
+    if (req.file) {
+	console.log(req.file);
 	image = 1;
 	message = {"msg":"setup"};
+    } else {
+	console.log(req.body);
     }
     res.send(message);
-});
-
-var multer = require('multer');
-var upload = multer({dest: './uploads/'});
-
-app.post('/tracker/api/upload/', upload.single('image'), function(req, res) {
-    if(req.file) console.log(req.file);
 });
 
 app.use(errorController.get404);
