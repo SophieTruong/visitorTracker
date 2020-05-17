@@ -17,18 +17,18 @@ router.post('/add-space', AdminController.postAddSpace);
 // /admin/edit-space => GET
 //router.get('/edit-space/:spaceID', AdminController.getEditSpace);
 
-// /admin/edit-space => POST
 //router.post('/edit-space/',AdminController.postEditSpace);
 
 // /admin/delete-space => POST
 //router.post('/delete-space/',AdminController.postDeleteSpace);
+
 /* ..... EXHIBITION .....*/
 
 // /admin/add-exhibition=> GET
-//router.get('/add-exhibition', AdminController.getAddExhibition);
+router.get('/add-exhibition', AdminController.getAddExhibition);
 
 // /admin/add-exhibition => POST
-//router.post('/add-exhibition', AdminController.postAddExhibition);
+router.post('/add-exhibition', AdminController.postAddExhibition);
 
 // /admin/edit-exhibition => GET
 //router.get('/edit-exhibition/:exhibitionID', AdminController.getEditExhibition);
@@ -43,10 +43,10 @@ router.post('/add-space', AdminController.postAddSpace);
 
 
 // /admin/add-tracker=> GET
-//router.get('/add-tracker', AdminController.getAddTracker);
+router.get('/add-tracker', AdminController.getAddTracker);
 
 // /admin/add-tracker => POST
-//router.post('/add-tracker', AdminController.postAddTracker);
+router.post('/add-tracker', AdminController.postAddTracker);
 
 // /admin/edit-exhibition => GET
 //router.get('/edit-tracker/:trackerID', AdminController.getEditTracker);

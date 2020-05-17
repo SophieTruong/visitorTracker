@@ -1,8 +1,8 @@
 /// allow admin actions: CRUD
 
 const Space = require('../models/space');
-// const Exhibition = require('../models/exhibition');
-// const Tracker = require('../models/tracker');
+const Exhibition = require('../models/exhibition');
+const Tracker = require('../models/tracker');
 
 /* ..... SPACE .....*/
 exports.getAddSpace = (req, res, next) => {
@@ -18,7 +18,7 @@ exports.postAddSpace = (req, res, next) => {
     const spaceID = req.body.spaceID;
     const imageUrl = req.body.imageUrl;
 
-    const space = new Space(null,spaceName,spaceID,imageUrl);
+    const space = new Space(spaceName,spaceID,imageUrl);
     space
       .save()
       .then(result =>{
@@ -63,44 +63,49 @@ exports.postAddSpace = (req, res, next) => {
 //     updatedImageUrl
 //     );
 //   updatedSpace.save();
-//   console.log(updatedSpace);
 //   res.redirect("/spaces/all-space");
-// };
+// ;
 
-// exports.postDeleteSpace = (req,res,next) =>{
-//   const spaceID = req.body.spcID;
-//   Space.deleteById(spaceID);
-//   res.redirect("/spaces/all-space");
 // }
 
 // /* ..... EXHIBITION .....*/
-// exports.getAddExhibition = (req, res, next) => {
-//   res.render('admin/edit-exhibition', {
-//     pageTitle: 'Add Exhibition',
-//     path: '/admin/add-exhibition',
-//     editing: false
-//   });
-// };
+exports.getAddExhibition = (req, res, next) => {
+  res.render('admin/edit-exhibition', {
+    pageTitle: 'Add Exhibition',
+    path: '/admin/add-exhibition',
+    editing: false
+  });
+};
 
 
-// exports.postAddExhibition = (req, res, next) => {
-//   const name = req.body.name;
-//   const startDate = req.body.startDate;
-//   const endDate = req.body.endDate;
+exports.postAddExhibition = (req, res, next) => {
+  const name = req.body.name;
+  const startDate = req.body.startDate;
+  const endDate = req.body.endDate;
 
-//   const exhibition = new Exhibition(null,name,startDate,endDate);
-//   //console.log(space);
-//   exhibition.save();
-//   res.redirect('/');
-// };
+
+  const exhibition = new Exhibition(name,startDate,endDate);
+  //console.log(space);
+  exhibition
+  .save()
+  .then(result =>{
+      console.log('New exhibition added');
+      res.redirect('/');
+  })
+  .catch(err =>{
+    console.log(err);
+  })
+};
 
 // exports.getEditExhibition = (req, res, next) => {
 //   const editMode = req.query.edit;
+//   console.log(editMode);
 //   if (!editMode){
 //     return res.redirect('/error');
 //   }
 //   const exhibitionID = req.params.exhibitionID;
 //   Exhibition.findbyId(exhibitionID, exhibition =>{
+//     console.log(exhibition);
 //     if (!exhibition){
 //       return res.redirect('/error');
 //     }
@@ -125,43 +130,44 @@ exports.postAddSpace = (req, res, next) => {
 //     updatedEndDate
 //   );
 //   updatedExhibition.save();
-//   console.log(updatedExhibition)
 //   res.redirect("/")
   
 // }
-
-// exports.postDeleteExhibition = (req,res,next) =>{
-//   const exhId = req.body.exhId;
-//   Exhibition.deleteById(exhId);
-//   res.redirect("/");
-// }
-
 // /* ..... TRACKER .....*/
 
-// exports.getAddTracker = (req, res, next) => {
-//   res.render('admin/edit-tracker', {
-//     pageTitle: 'Add Tracker',
-//     path: '/admin/add-tracker',
-//     editing: false
-//   });
-// };
+exports.getAddTracker = (req, res, next) => {
+  res.render('admin/edit-tracker', {
+    pageTitle: 'Add Tracker',
+    path: '/admin/add-tracker',
+    editing: false
+  });
+};
 
-// exports.postAddTracker = (req, res, next) => {
-//   const name = req.body.name;
-//   const UUID = req.body.UUID;
-//   const tracker = new Tracker(null,name, UUID);
-//   //console.log(space);
-//   tracker.save();
-//   res.redirect('/trackers/all-trackers');
-// };
+exports.postAddTracker = (req, res, next) => {
+  const name = req.body.name;
+  const UUID = req.body.UUID;
+  const tracker = new Tracker(name, UUID);
+  //console.log(space);
+  tracker
+  .save()
+  .then(result =>{
+    console.log('New tracker added');
+    res.redirect('/trackers/all-trackers');
+  })
+  .catch(err =>{
+    console.log(err);
+  })
+};
 
 // exports.getEditTracker = (req, res, next) => {
 //   const editMode = req.query.edit;
+//   console.log(editMode);
 //   if (!editMode){
 //     return res.redirect('/error');
 //   }
 //   const trackerID = req.params.trackerID;
 //   Tracker.findbyId(trackerID, tracker =>{
+//     console.log(tracker);
 //     if (!tracker){
 //       return res.redirect('/');
 //     }
