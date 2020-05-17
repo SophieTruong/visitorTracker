@@ -40,6 +40,4 @@ app.post('/tracker/api/', function (req, res) {
 
 app.use(errorController.get404);
 
-mongoConnect (() => {
-    app.listen(3000);
-})
+app.listen(3000);
