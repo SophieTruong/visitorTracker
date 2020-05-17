@@ -3,7 +3,9 @@ const path = require('path');
 // install express: npm install --save express
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const errorController = require('./controllers/error');
+const mongoConnect =require('./utils/database').mongoConnect;
 
 const app = express();
 
@@ -26,4 +28,6 @@ app.use('/trackers',trackerRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+mongoConnect (() => {
+    app.listen(3000);
+})
