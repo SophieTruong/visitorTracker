@@ -56,7 +56,7 @@ var upload = multer({dest: './uploads/'});
 
 app.post('/tracker/api/upload/', upload.single('image'), function(req, res) {
     if(req.file) console.log(req.file);
-}
+});
 
 app.use(errorController.get404);
 
