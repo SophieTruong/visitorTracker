@@ -6,7 +6,7 @@ class Exhibition{
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this._id = mongodb.ObjectId(_id);
+        this._id = _id ? mongodb.ObjectId(_id) : null;
     }
     save(){
         const db = getDb();

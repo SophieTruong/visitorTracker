@@ -6,7 +6,7 @@ class Space{
         this.name = name;
         this.spaceID = spaceID;
         this.imageUrl=imageUrl;
-        this._id = mongodb.ObjectId(_id);
+        this._id = _id ? mongodb.ObjectId(_id) : null;
     }
     save(){
         const db = getDb();

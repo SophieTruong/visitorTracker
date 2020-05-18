@@ -5,7 +5,7 @@ class Tracker{
     constructor(name,UUID,_id){
     this.name = name;
     this.UUID = UUID;
-    this._id = mongodb.ObjectId(_id);
+    this._id = _id ? mongodb.ObjectId(_id) : null;
     }
 
     save(){
