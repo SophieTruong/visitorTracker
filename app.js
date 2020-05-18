@@ -64,16 +64,24 @@ app.use('/trackers',trackerRoutes);
 
 // API for the database
 app.use(bodyParser.json())
-// at start the message should be setup
 var message = {"msg":"setup"};
-var image = 0;
+var image = false;
+
+function waitAndRespond(res) {
+    if(image===false) {
+	setTimeout(waitAndRespond, 50, res);
+	return;
+    }
+    res.send('Hello world!');
+    console.log('send image');
+}
 
 app.get('/tracker/api/', function (req, res) {
     console.log(req.body);
     if (req.body.action == 'tracker-preview') {
 	message = {"msg":"preview"};
-	image = 0;
-	// after image is recived we should return page with the image here
+	image = false;
+	waitAndRespond(res);
     }        
 });
 
@@ -91,7 +99,7 @@ var upload = multer({ storage: storage });
 app.post('/tracker/api/', upload.single('file'),  function (req, res) {
     if (req.file) {
 	console.log(req.file);
-	image = 1;
+	image = true;
 	message = {"msg":"setup"};
     } else {
 	console.log(req.body);
