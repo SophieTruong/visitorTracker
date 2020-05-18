@@ -1,15 +1,22 @@
+const mongodb = require('mongodb');
 const getDb = require('../utils/database').getDb;
 
 class Exhibition{
-    constructor(name, startDate, endDate){
+    constructor(name, startDate, endDate, _id){
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this._id = mongodb.ObjectId(_id);
     }
     save(){
         const db = getDb();
-        return db.collection('exhibitions')
-            .insertOne(this)
+        let dbOp;
+        if (this._id){
+            dbOp = db.collection('exhibitions').updateOne({_id: this._id}, {$set: this});
+        } else {
+            dbOp = db.collection('exhibitions').insertOne(this);
+        }
+        return dbOp
             .then(result=>{
                 console.log(result);
             })
@@ -25,12 +32,39 @@ class Exhibition{
         .find()
         .toArray()
         .then(exhibitions=>{
-            console.log(exhibitions);
+            //console.log(exhibitions);
             return exhibitions;
         })
         .catch(err =>{
             console.log(err);
         });
+    }
+
+    static findById(exhId){
+        const db = getDb();
+        return db
+          .collection('exhibitions')
+          .find({_id: new mongodb.ObjectId(exhId)})
+          .next()
+          .then(exhibition =>{
+              console.log(exhibition);
+              return exhibition;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+    }
+    static deleteById(exhId){
+        const db = getDb();
+        return db.collection('exhibitions')
+            .deleteOne({_id: new mongodb.ObjectId(exhId)})
+            .then(result =>{
+                console.log('Deleted');
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 }
 module.exports = Exhibition;

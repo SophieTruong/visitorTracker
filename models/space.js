@@ -1,16 +1,22 @@
+const mongodb = require('mongodb');
 const getDb = require('../utils/database').getDb;
 
 class Space{
-    constructor(name,spaceID,imageUrl){
+    constructor(name,spaceID,imageUrl, _id){
         this.name = name;
         this.spaceID = spaceID;
         this.imageUrl=imageUrl;
+        this._id = mongodb.ObjectId(_id);
     }
     save(){
         const db = getDb();
-        return db
-        .collection('spaces')
-        .insertOne(this)
+        let dbOp;
+        if (this._id){
+            dbOp = db.collection('spaces').updateOne({_id: this._id}, {$set: this});
+        } else {
+            dbOp = db.collection('spaces').insertOne(this);
+        }
+        return dbOp
         .then(result =>{
             console.log(result);
         })
@@ -25,13 +31,39 @@ class Space{
           .find()
           .toArray()
           .then(spaces => {
-            console.log(spaces);
+            //console.log(spaces);
             return spaces;
           })
           .catch(err => {
             console.log(err);
           });
-      }
+    }
+    static findById(spcID){
+        const db = getDb();
+        return db
+          .collection('spaces')
+          .find({_id: new mongodb.ObjectId(spcID)})
+          .next()
+          .then(space =>{
+              console.log(space);
+              return space;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+    }
+    static deleteById(spcID){
+        const db = getDb();
+        return db.collection('spaces')
+            .deleteOne({_id: new mongodb.ObjectId(spcID)})
+            .then(result =>{
+                console.log('Deleted');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 }
 
 module.exports = Space;

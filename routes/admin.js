@@ -15,12 +15,12 @@ router.get('/add-space', AdminController.getAddSpace);
 router.post('/add-space', AdminController.postAddSpace);
 
 // /admin/edit-space => GET
-//router.get('/edit-space/:spaceID', AdminController.getEditSpace);
+router.get('/edit-space/:spaceID', AdminController.getEditSpace);
 
-//router.post('/edit-space/',AdminController.postEditSpace);
+router.post('/edit-space/',AdminController.postEditSpace);
 
 // /admin/delete-space => POST
-//router.post('/delete-space/',AdminController.postDeleteSpace);
+router.post('/delete-space/',AdminController.postDeleteSpace);
 
 /* ..... EXHIBITION .....*/
 
@@ -31,13 +31,13 @@ router.get('/add-exhibition', AdminController.getAddExhibition);
 router.post('/add-exhibition', AdminController.postAddExhibition);
 
 // /admin/edit-exhibition => GET
-//router.get('/edit-exhibition/:exhibitionID', AdminController.getEditExhibition);
+router.get('/edit-exhibition/:exhibitionID', AdminController.getEditExhibition);
 
 // /admin/edit-exhibition => POST
-//router.post('/edit-exhibition/:exhibitionID',AdminController.postEditExhibition);
+router.post('/edit-exhibition/:exhibitionID',AdminController.postEditExhibition);
 
 // /admin/delete-exhibition => POST
-//router.post('/delete-exhibition/',AdminController.postDeleteExhibition);
+router.post('/delete-exhibition/',AdminController.postDeleteExhibition);
 
 /* ..... TRACKER .....*/
 
@@ -49,12 +49,12 @@ router.get('/add-tracker', AdminController.getAddTracker);
 router.post('/add-tracker', AdminController.postAddTracker);
 
 // /admin/edit-exhibition => GET
-//router.get('/edit-tracker/:trackerID', AdminController.getEditTracker);
+router.get('/edit-tracker/:trackerID', AdminController.getEditTracker);
 
 // /admin/edit-tracker => POST
-//router.post('/edit-tracker/:trackerID', AdminController.postEditTracker);
+router.post('/edit-tracker/:trackerID', AdminController.postEditTracker);
 
 // /admin/delete-tracker => POST
-//router.post('/delete-tracker/',AdminController.postDeleteTracker);
+router.post('/delete-tracker/',AdminController.postDeleteTracker);
 
 module.exports = router;
