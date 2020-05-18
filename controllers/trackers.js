@@ -13,3 +13,15 @@ exports.getTrackers =  (req, res, next) => {
       console.log(err);
     })
 };
+
+
+const request = require('superagent');
+exports.getTrackerPreview = (req, res) => {
+    request
+	.get('localhost:3000/tracker/api/')
+	.send({ action: 'tracker-preview', id: 'string'})
+	//.set('Accept', 'application/json')
+	.then(res => {
+	    alert('yay got ' + JSON.stringify(res.body));
+	});
+};
