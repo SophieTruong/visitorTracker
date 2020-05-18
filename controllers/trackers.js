@@ -22,6 +22,7 @@ exports.getTrackerPreview = (req, res) => {
 	.send({ action: 'tracker-preview', id: 'string'})
 	.set('Accept', 'application/json')
 	.then(res => {
+	    //we should return te page here
 	    console.log('yay got ' + JSON.stringify(res.body));
 	});
 };
