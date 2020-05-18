@@ -47,7 +47,8 @@ app.use('/trackers',trackerRoutes);
 
 // API for the database
 app.use(bodyParser.json())
-var message = {"msg":"preview"};
+// at start the message should be setup
+var message = {"msg":"setup"};
 var image = 0;
 
 app.get('/tracker/api/', function (req, res) {
