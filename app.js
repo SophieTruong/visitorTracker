@@ -54,8 +54,8 @@ app.get('/tracker/api/', function (req, res) {
 // var multer = require('multer'); //I move this on top of the document
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-    //cb(null, './previews/')
-    cb(null, 'image')
+    cb(null, './previews/')
+    //cb(null, 'image')
     },
     filename: function (req, file, cb) {
     cb(null, file.originalname)
