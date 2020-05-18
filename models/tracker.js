@@ -1,16 +1,22 @@
-
+const mongodb = require('mongodb');
 const getDb = require('../utils/database').getDb;
 
 class Tracker{
-    constructor(name,UUID){
+    constructor(name,UUID,_id){
     this.name = name;
     this.UUID = UUID;
+    this._id = _id ? mongodb.ObjectId(_id) : null;
     }
 
     save(){
         const db = getDb();
-        return db.collection('trackers')
-            .insertOne(this)
+        let dbOp;
+        if (this._id){
+            dbOp = db.collection('trackers').updateOne({_id: this._id}, {$set: this})
+        } else {
+            dbOp = db.collection('trackers').insertOne(this)
+        }
+        return dbOp
             .then(result=>{
                 console.log(result);
             })
@@ -26,12 +32,38 @@ class Tracker{
         .find()
         .toArray()
         .then(trackers=>{
-            console.log(trackers);
+            //console.log(trackers);
             return trackers;
         })
         .catch(err =>{
             console.log(err);
         });
+    }
+
+    static findById(trckId){
+        const db = getDb();
+        return db
+          .collection('trackers')
+          .find({_id: new mongodb.ObjectId(trckId)})
+          .next()
+          .then(tracker =>{
+              console.log(tracker);
+              return tracker;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    }
+    static deleteById(trckId){
+        const db = getDb();
+        return db.collection('trackers')
+            .deleteOne({_id: new mongodb.ObjectId(trckId)})
+            .then(result =>{
+                console.log('Deleted');
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 }
 module.exports = Tracker;

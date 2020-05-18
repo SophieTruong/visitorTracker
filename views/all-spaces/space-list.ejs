@@ -20,16 +20,16 @@
                         </div>
 
                         <div class="card__image">
-                            <img src="<%= space.imageUrl %>"
-                                alt="Aalto Vare campus" height= 200 px >
+                            <img src="<%= space.image %>"
+                                height= 200 px >
                         </div>
 
                         <div class="card__actions">
 
-                            <a href="/admin/edit-space/<%= space.id%>?edit=true" class="btn">Edit</a>
+                            <a href="/admin/edit-space/<%= space._id%>?edit=true" class="btn">Edit</a>
                             
                             <form action="/admin/delete-space" method="POST">
-                                <input type = "hidden" value = "<%=space.id%>" name = "spcID">
+                                <input type = "hidden" value = "<%=space._id%>" name = "spcID">
                                 <button class="btn" type="submit">Delete</button>
                             </form>
 

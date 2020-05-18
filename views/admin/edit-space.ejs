@@ -7,7 +7,7 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-    <form class="space-form" action="/admin/<% if (editing) { %>edit-space<% } else { %>add-space<% } %>" method="POST">
+    <form class="space-form" action="/admin/<% if (editing) { %>edit-space<% } else { %>add-space<% } %>" method="POST" enctype="multipart/form-data">
 
             <div class="form-control">
                 <label for="spaceName">Space Name</label>
@@ -23,14 +23,17 @@
                 required>
             </div>
 
-            <div class="form-control">
+            <!-- <div class="form-control">
                 <label for="imageUrl">Image URL</label>
                 <input type="text" name="imageUrl" id="imageUrl"
-                value = "<% if (editing) { %><%= space.imageUrl %> <% } %>">
+                value = "">
+            </div> -->
+            <div class = "form-control">
+                <label for="image">Image</label>
+                <input type = "file" name = "image" id ="image">
             </div>
-
             <% if (editing) {%> 
-                <input type = "hidden" value = "<%=space.id%>" name = "spcID">
+                <input type = "hidden" value = "<%=space._id%>" name = "spcID">
             <% } %> 
 
             <button class="btn" type="submit">

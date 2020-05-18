@@ -16,9 +16,27 @@ exports.getAddSpace = (req, res, next) => {
 exports.postAddSpace = (req, res, next) => {
     const spaceName = req.body.spaceName;
     const spaceID = req.body.spaceID;
-    const imageUrl = req.body.imageUrl;
+    const image = req.file;
 
-    const space = new Space(spaceName,spaceID,imageUrl);
+    if (!image){
+      return res.status(422).render('admin/edit-space',{
+          pageTitle: 'Add Space',
+          path: '/admin/add-space',
+          editing: false,
+          hasError: true,
+          space:{
+            name: spaceName,
+            spaceID: spaceID,
+          },
+          errorMessage: 'Attached file is not an image',
+          validationErrors: []
+      })
+    }
+    //const imageUrl = 
+
+    console.log('imageUrl' + image);
+
+    const space = new Space(spaceName,spaceID,image);
     space
       .save()
       .then(result =>{
@@ -30,43 +48,65 @@ exports.postAddSpace = (req, res, next) => {
       });
 };
 
-// exports.getEditSpace = (req, res, next) => {
-//   const editMode = req.query.edit;
-//   console.log(editMode);
-//   if (!editMode){
-//     return res.redirect('/error');
-//   }
-//   const spaceID = req.params.spaceID;
-//   Space.findbyId(spaceID, space =>{
-//     console.log(space);
-//     if (!space){
-//       return res.redirect('/');
-//     }
-//     res.render('admin/edit-space', {
-//       pageTitle: 'Edit Space',
-//       path: '/admin/edit-space',
-//       editing: editMode,
-//       space:space
-//     });
-//   });
-// };
+exports.getEditSpace = (req, res, next) => {
+  const editMode = req.query.edit;
+  console.log(editMode);
+  if (!editMode){
+    return res.redirect('/error');
+  }
+  const spaceID = req.params.spaceID;
+  Space.findById(spaceID)
+    .then (space =>{
+      if (!space){
+        return res.redirect('/');
+      }
+      res.render('admin/edit-space', {
+        pageTitle: 'Edit Space',
+        path: '/admin/edit-space',
+        editing: editMode,
+        space:space
+      });
+      console.log('>> spaceID:' + spaceID);
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+};
 
-// exports.postEditSpace = (req,res,next) =>{
-//   const spaceID = req.body.spcID;
-//   const updatedSpaceID = req.body.spaceID;
-//   const updatedName = req.body.spaceName;
-//   const updatedImageUrl = req.body.imageUrl;
-//   const updatedSpace = new Space(
-//     spaceID,
-//     updatedName,
-//     updatedSpaceID,
-//     updatedImageUrl
-//     );
-//   updatedSpace.save();
-//   res.redirect("/spaces/all-space");
-// ;
+exports.postEditSpace = (req,res,next) =>{
+  const spcID = req.body.spcID;
+  const updatedSpaceID = req.body.spaceID;
+  const updatedName = req.body.spaceName;
+  const updatedImageUrl = req.body.imageUrl;
 
-// }
+  const updatedSpace = new Space(
+    updatedName,
+    updatedSpaceID,
+    updatedImageUrl,
+    spcID
+    );
+  updatedSpace
+  .save()
+    .then(result=>{
+      console.log('>> spcID: ' + spcID);
+      console.log('Updated space');
+      res.redirect("/spaces/all-space");
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+}
+exports.postDeleteSpace = (req,res,next) =>{
+  const spcID = req.body.spcID;
+  Space.deleteById(spcID)
+    .then(result =>{
+      console.log('Deleted space');
+      res.redirect("/spaces/all-space");
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+};
 
 // /* ..... EXHIBITION .....*/
 exports.getAddExhibition = (req, res, next) => {
@@ -97,42 +137,65 @@ exports.postAddExhibition = (req, res, next) => {
   })
 };
 
-// exports.getEditExhibition = (req, res, next) => {
-//   const editMode = req.query.edit;
-//   console.log(editMode);
-//   if (!editMode){
-//     return res.redirect('/error');
-//   }
-//   const exhibitionID = req.params.exhibitionID;
-//   Exhibition.findbyId(exhibitionID, exhibition =>{
-//     console.log(exhibition);
-//     if (!exhibition){
-//       return res.redirect('/error');
-//     }
-//     res.render('admin/edit-exhibition', {
-//       pageTitle: 'Edit Exhibition',
-//       path: '/admin/edit-exhibition',
-//       editing: editMode,
-//       exhibition:exhibition
-//     });
-//   });
-// };
+exports.getEditExhibition = (req, res, next) => {
+  const editMode = req.query.edit;
+  console.log(editMode);
+  if (!editMode){
+    return res.redirect('/error');
+  }
+  const exhibitionID = req.params.exhibitionID;
+  Exhibition.findById(exhibitionID)
+  .then (exhibition =>{
+    if (!exhibition){
+      return res.redirect('/error');
+    }
+    res.render('admin/edit-exhibition', {
+      pageTitle: 'Edit Exhibition',
+      path: '/admin/edit-exhibition',
+      editing: editMode,
+      exhibition:exhibition
+    });
+    console.log('>> spacexhibitionIDeID: ' + exhibitionID);
+  })
+  .catch(err =>{
+    console.log(err);
+  });
+};
 
-// exports.postEditExhibition = (req,res,next) =>{
-//   const exhId = req.body.exhId;
-//   const updatedExhName = req.body.name;
-//   const updatedStartDate = req.body.startDate;
-//   const updatedEndDate = req.body.endDate;
-//   const updatedExhibition = new Exhibition(
-//     exhId,
-//     updatedExhName,
-//     updatedStartDate,
-//     updatedEndDate
-//   );
-//   updatedExhibition.save();
-//   res.redirect("/")
+exports.postEditExhibition = (req,res,next) =>{
+  const exhId = req.body.exhId;
+  const updatedExhName = req.body.name;
+  const updatedStartDate = req.body.startDate;
+  const updatedEndDate = req.body.endDate;
   
-// }
+  const updatedExhibition = new Exhibition(
+    updatedExhName,
+    updatedStartDate,
+    updatedEndDate,
+    exhId
+  );
+  updatedExhibition.save()
+    .then(result=>{
+      console.log('>> exhId: ' + exhId);
+      console.log('Updated Exhibition');
+      res.redirect("/")
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+}
+
+exports.postDeleteExhibition = (req,res,next) =>{
+  const exhId = req.body.exhId;
+  Exhibition.deleteById(exhId)
+    .then(result =>{
+      console.log('Deleted Exhibition');
+      res.redirect("/")
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+};  
 // /* ..... TRACKER .....*/
 
 exports.getAddTracker = (req, res, next) => {
@@ -159,43 +222,62 @@ exports.postAddTracker = (req, res, next) => {
   })
 };
 
-// exports.getEditTracker = (req, res, next) => {
-//   const editMode = req.query.edit;
-//   console.log(editMode);
-//   if (!editMode){
-//     return res.redirect('/error');
-//   }
-//   const trackerID = req.params.trackerID;
-//   Tracker.findbyId(trackerID, tracker =>{
-//     console.log(tracker);
-//     if (!tracker){
-//       return res.redirect('/');
-//     }
-//     res.render('admin/edit-tracker', {
-//       pageTitle: 'Edit Tracker',
-//       path: '/admin/edit-tracker',
-//       editing: editMode,
-//       tracker:tracker
-//     });
-//   });
-// };
+exports.getEditTracker = (req, res, next) => {
+  const editMode = req.query.edit;
+  console.log(editMode);
+  if (!editMode){
+    return res.redirect('/error');
+  }
+  const trackerID = req.params.trackerID;
+  Tracker.findById(trackerID)
+  .then (tracker =>{
+    if (!tracker){
+      return res.redirect('/');
+    }
+    res.render('admin/edit-tracker', {
+      pageTitle: 'Edit Tracker',
+      path: '/admin/edit-tracker',
+      editing: editMode,
+      tracker:tracker
+    });
+    console.log('>> trackerID:' + trackerID);
+  })
+  .catch(err =>{
+    console.log(err);
+  })
+};
 
-// exports.postEditTracker =(req, res, next) => {
-//   const trckId = req.body.trckId;
-//   const updatedTrackerName = req.body.name;
-//   const updatedUUID = req.body.UUID;
-//   const updatedTracker = new Tracker(
-//     trckId,
-//     updatedTrackerName,
-//     updatedUUID
-//   );
-//   updatedTracker.save();
-//   console.log(updatedTracker);
-//   res.redirect("/trackers/all-trackers");
-// };
+exports.postEditTracker =(req, res, next) => {
+  const trckId = req.body.trckId;
+  const updatedTrackerName = req.body.name;
+  const updatedUUID = req.body.UUID;
 
-// exports.postDeleteTracker = (req,res,next) =>{
-//   const trckId = req.body.trckId;
-//   Tracker.deleteById(trckId);
-//   res.redirect("/trackers/all-trackers");
-// }
+  const updatedTracker = new Tracker(
+    updatedTrackerName,
+    updatedUUID,
+    trckId
+  );
+  updatedTracker
+  .save()
+  .then(result=>{
+    console.log('>> trckId: ' + trckId);
+    console.log(updatedTracker);
+    res.redirect("/trackers/all-trackers");
+  })
+  .catch(err =>{
+    console.log(err);
+  });
+  
+};
+
+exports.postDeleteTracker = (req,res,next) =>{
+  const trckId = req.body.trckId;
+  Tracker.deleteById(trckId)
+    .then(result =>{
+      console.log('Deleted tracker');
+      res.redirect("/trackers/all-trackers");
+    })  
+    .catch(err =>{
+      console.log(err);
+    });  
+}

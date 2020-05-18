@@ -7,7 +7,7 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <form class="/admin/<% if (editing) { %>edit-exhibition<% } else { %>add-exhibition<% } %>" method="POST">
+        <form class="/admin/<% if (editing) { %>edit-exhibition<% } else { %>add-exhibition<% } %>" method="POST" enctype="multipart/form-data">
             
             <div class="form-control">
                 <label for="name">Name</label>
@@ -31,7 +31,7 @@
             </div>
 
             <% if (editing) {%> 
-                <input type = "hidden" value = "<%=exhibition.id%>" name = "exhId">
+                <input type = "hidden" value = "<%=exhibition._id%>" name = "exhId">
             <% } %> 
 
             <button class="btn" type="submit">
