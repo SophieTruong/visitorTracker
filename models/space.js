@@ -2,10 +2,10 @@ const mongodb = require('mongodb');
 const getDb = require('../utils/database').getDb;
 
 class Space{
-    constructor(name,spaceID,imageUrl, _id){
+    constructor(name,spaceID,image, _id){
         this.name = name;
         this.spaceID = spaceID;
-        this.imageUrl=imageUrl;
+        this.image=image;
         this._id = _id ? mongodb.ObjectId(_id) : null;
     }
     save(){
@@ -67,26 +67,6 @@ class Space{
 }
 
 module.exports = Space;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

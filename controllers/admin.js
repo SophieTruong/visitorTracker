@@ -16,9 +16,27 @@ exports.getAddSpace = (req, res, next) => {
 exports.postAddSpace = (req, res, next) => {
     const spaceName = req.body.spaceName;
     const spaceID = req.body.spaceID;
-    const imageUrl = req.body.imageUrl;
+    const image = req.file;
 
-    const space = new Space(spaceName,spaceID,imageUrl);
+    if (!image){
+      return res.status(422).render('admin/edit-space',{
+          pageTitle: 'Add Space',
+          path: '/admin/add-space',
+          editing: false,
+          hasError: true,
+          space:{
+            name: spaceName,
+            spaceID: spaceID,
+          },
+          errorMessage: 'Attached file is not an image',
+          validationErrors: []
+      })
+    }
+    //const imageUrl = 
+
+    console.log('imageUrl' + image);
+
+    const space = new Space(spaceName,spaceID,image);
     space
       .save()
       .then(result =>{

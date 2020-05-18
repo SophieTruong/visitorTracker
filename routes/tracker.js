@@ -7,5 +7,6 @@ const trackersController = require('../controllers/trackers');
 const router = express.Router();
 
 router.get('/all-trackers',trackersController.getTrackers);
+//router.get('/preview/:trackerID', trackersController.getTrackerPreview);
 
 module.exports = router;

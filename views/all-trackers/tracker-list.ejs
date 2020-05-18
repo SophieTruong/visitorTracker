@@ -32,7 +32,8 @@
                                 <button class="btn" type="submit">Delete</button>
                             </form>
 
-                            <form action="/test-view" method="GET">
+                            <form action="/trackers/test-view" method="GET">
+                                <input type = "hidden" value = "<%=tracker._id%>" name = "trckId">
                                 <button class="btn">Test view</button>
                             </form>
 

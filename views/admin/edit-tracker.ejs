@@ -7,7 +7,7 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <form class="/admin/<% if (editing) { %>edit-tracker<% } else { %>add-tracker<% } %>" method="POST">
+        <form class="/admin/<% if (editing) { %>edit-tracker<% } else { %>add-tracker<% } %>" method="POST" enctype="multipart/form-data">
             
             <div class="form-control">
                 <label for="name">Name</label>
