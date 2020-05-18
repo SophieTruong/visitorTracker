@@ -5,9 +5,9 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-
+   <!-- enctype="multipart/form-data" -->
     <main>
-        <form class="/admin/<% if (editing) { %>edit-tracker<% } else { %>add-tracker<% } %>" method="POST" enctype="multipart/form-data">
+        <form class="/admin/<% if (editing) { %>edit-tracker<% } else { %>add-tracker<% } %>" method="POST">
             
             <div class="form-control">
                 <label for="name">Name</label>

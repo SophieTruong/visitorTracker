@@ -15,28 +15,29 @@ exports.getAddSpace = (req, res, next) => {
 
 exports.postAddSpace = (req, res, next) => {
     const spaceName = req.body.spaceName;
-    const spaceID = req.body.spaceID;
-    const image = req.file;
+    const imageUrl = req.body.imageUrl;
 
-    if (!image){
-      return res.status(422).render('admin/edit-space',{
-          pageTitle: 'Add Space',
-          path: '/admin/add-space',
-          editing: false,
-          hasError: true,
-          space:{
-            name: spaceName,
-            spaceID: spaceID,
-          },
-          errorMessage: 'Attached file is not an image',
-          validationErrors: []
-      })
-    }
+    // if (!image){
+    //   return res.status(422).render('admin/edit-space',{
+    //       pageTitle: 'Add Space',
+    //       path: '/admin/add-space',
+    //       editing: false,
+    //       hasError: true,
+    //       space:{
+    //         name: spaceName,
+    //         spaceID: spaceID,
+    //       },
+    //       errorMessage: 'Attached file is not an image',
+    //       validationErrors: []
+    //   })
+    // }
     //const imageUrl = 
 
-    console.log('imageUrl' + image);
+    //console.log('imageUrl' + image);
 
-    const space = new Space(spaceName,spaceID,image);
+    const space = new Space({
+      spaceName: spaceName,
+      imageUrl: imageUrl});
     space
       .save()
       .then(result =>{
@@ -75,18 +76,14 @@ exports.getEditSpace = (req, res, next) => {
 
 exports.postEditSpace = (req,res,next) =>{
   const spcID = req.body.spcID;
-  const updatedSpaceID = req.body.spaceID;
   const updatedName = req.body.spaceName;
   const updatedImageUrl = req.body.imageUrl;
 
-  const updatedSpace = new Space(
-    updatedName,
-    updatedSpaceID,
-    updatedImageUrl,
-    spcID
-    );
-  updatedSpace
-  .save()
+  Space.findById(spcID).then(space =>{
+    space.spaceName = updatedName;
+    space.imageUrl = updatedImageUrl;
+    return space.save();
+    })
     .then(result=>{
       console.log('>> spcID: ' + spcID);
       console.log('Updated space');
@@ -98,7 +95,7 @@ exports.postEditSpace = (req,res,next) =>{
 }
 exports.postDeleteSpace = (req,res,next) =>{
   const spcID = req.body.spcID;
-  Space.deleteById(spcID)
+  Space.findByIdAndDelete(spcID)
     .then(result =>{
       console.log('Deleted space');
       res.redirect("/spaces/all-space");
@@ -123,9 +120,11 @@ exports.postAddExhibition = (req, res, next) => {
   const startDate = req.body.startDate;
   const endDate = req.body.endDate;
 
-
-  const exhibition = new Exhibition(name,startDate,endDate);
-  //console.log(space);
+  const exhibition = new Exhibition({
+    name: name,
+    startDate: startDate,
+    endDate: endDate
+  });
   exhibition
   .save()
   .then(result =>{
@@ -168,13 +167,14 @@ exports.postEditExhibition = (req,res,next) =>{
   const updatedStartDate = req.body.startDate;
   const updatedEndDate = req.body.endDate;
   
-  const updatedExhibition = new Exhibition(
-    updatedExhName,
-    updatedStartDate,
-    updatedEndDate,
-    exhId
-  );
-  updatedExhibition.save()
+  Exhibition.findById(exhId)
+    .then(exhibition =>{
+      exhibition.name = updatedExhName;
+      exhibition.startDate = updatedStartDate;
+      exhibition.endDate = updatedEndDate;
+  
+      return exhibition.save();
+    })
     .then(result=>{
       console.log('>> exhId: ' + exhId);
       console.log('Updated Exhibition');
@@ -187,7 +187,7 @@ exports.postEditExhibition = (req,res,next) =>{
 
 exports.postDeleteExhibition = (req,res,next) =>{
   const exhId = req.body.exhId;
-  Exhibition.deleteById(exhId)
+  Exhibition.findByIdAndRemove(exhId)
     .then(result =>{
       console.log('Deleted Exhibition');
       res.redirect("/")
@@ -209,7 +209,11 @@ exports.getAddTracker = (req, res, next) => {
 exports.postAddTracker = (req, res, next) => {
   const name = req.body.name;
   const UUID = req.body.UUID;
-  const tracker = new Tracker(name, UUID);
+  const tracker = new Tracker({
+    name: name,
+    UUID: UUID,
+    spcId: req.space
+  });
   //console.log(space);
   tracker
   .save()
@@ -252,27 +256,26 @@ exports.postEditTracker =(req, res, next) => {
   const updatedTrackerName = req.body.name;
   const updatedUUID = req.body.UUID;
 
-  const updatedTracker = new Tracker(
-    updatedTrackerName,
-    updatedUUID,
-    trckId
-  );
-  updatedTracker
-  .save()
-  .then(result=>{
-    console.log('>> trckId: ' + trckId);
-    console.log(updatedTracker);
-    res.redirect("/trackers/all-trackers");
-  })
-  .catch(err =>{
-    console.log(err);
-  });
+  Tracker.findById(trckId)
+    .then(tracker=>{
+      tracker.name = updatedTrackerName;
+      tracker.UUID = updatedUUID;
+      return tracker.save()
+    })
+    .then(result=>{
+      console.log('>> trckId: ' + trckId);
+      //console.log(tracker);
+      res.redirect("/trackers/all-trackers");
+    })
+    .catch(err =>{
+      console.log(err);
+    });
   
 };
 
 exports.postDeleteTracker = (req,res,next) =>{
   const trckId = req.body.trckId;
-  Tracker.deleteById(trckId)
+  Tracker.findByIdAndRemove(trckId)
     .then(result =>{
       console.log('Deleted tracker');
       res.redirect("/trackers/all-trackers");

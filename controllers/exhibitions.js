@@ -2,7 +2,7 @@ const Exhibition = require('../models/exhibition');
 
 
 exports.getExhibition = (req,res,next) =>{
-    Exhibition.fetchAll()
+    Exhibition.find()
     .then(exhibitions =>{
         res.render('all-exhibition/exhibition-list', {
             exhs: exhibitions,

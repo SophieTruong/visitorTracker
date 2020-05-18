@@ -1,10 +1,14 @@
 const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 const multer = require('multer');
 
 const errorController = require('./controllers/error');
-const mongoConnect =require('./utils/database').mongoConnect;
+const Space = require('./models/space');
+//const mongoConnect =require('./utils/database').mongoConnect;
 
 const app = express();
 
@@ -17,28 +21,41 @@ const spaceRoutes = require('./routes/space');
 const exhibitionRoutes = require('./routes/exhibition');
 const trackerRoutes = require('./routes/tracker');
 
-const fileFilter = (req,file,cb) => {
-    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
-        cb(null,true);
-    } else{
-        cb(null,false);
-    }
-}
+// const fileFilter = (req,file,cb) => {
+//     if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+//         cb(null,true);
+//     } else{
+//         cb(null,false);
+//     }
+// }
 
-var storage2 = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'image')
-    },
-    filename: function (req, file, cb) {
-	//cb(null, file.originalname)
-	// this helps ensure the image us unique
-	cb(null, new Date().toISOString() + '-' + file.originalname) 
-    }
-});
+// var storage2 = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'image')
+//     },
+//     filename: function (req, file, cb) {
+// 	//cb(null, file.originalname)
+// 	// this helps ensure the image us unique
+// 	cb(null, new Date().toISOString() + '-' + file.originalname) 
+//     }
+// });
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({storage: storage2,fileFilter: fileFilter}).single('image')) // upload an image for add space
+//app.use(multer({storage: storage2,fileFilter: fileFilter}).single('image')) // upload an image for add space
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// create 1 test space that connect to test tracker
+app.use((req,res,next)=>{
+    Space.findById('5ec2e9ffc4eac97c7f8ae3b9')
+        .then(space => {
+        req.space = space;
+        next();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+})
 
 app.use('/',exhibitionRoutes);
 app.use('/admin', adminRoutes);
@@ -84,6 +101,25 @@ app.post('/tracker/api/', upload.single('file'),  function (req, res) {
 
 app.use(errorController.get404);
 
-mongoConnect (() => {
-    app.listen(3000);
-})
+mongoose
+    .connect ('mongodb+srv://sophie:onalFah9s3S8k3Ek@cluster0-8lddz.mongodb.net/space?retryWrites=true&w=majority'
+    , { useUnifiedTopology: true })
+    . then( result => {
+        // create 1 test space that connect to test tracker
+        Space.findOne().then(space=>{
+            if (!space){
+                const testSpace = new Space({
+                    spaceName: 'Test Space',
+                    imageUrl: 'http://decorpunk.com/wp-content/uploads/2020/01/88794-TheatriumoftheS.jpg',
+                    trackers:{
+                        devices: []
+                    }
+                });
+                testSpace.save();
+            };
+        })  
+        app.listen(3000);  
+    })
+    .catch(err =>{
+        console.log(err);
+    })

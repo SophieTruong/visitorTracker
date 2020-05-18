@@ -7,7 +7,7 @@ const AdminController = require('../controllers/admin')
 
 const router = express.Router();
 
-/* ..... SPACE .....*/
+// /* ..... SPACE .....*/
 // /admin/add-space => GET
 router.get('/add-space', AdminController.getAddSpace);
 
@@ -22,7 +22,7 @@ router.post('/edit-space/',AdminController.postEditSpace);
 // /admin/delete-space => POST
 router.post('/delete-space/',AdminController.postDeleteSpace);
 
-/* ..... EXHIBITION .....*/
+// /* ..... EXHIBITION .....*/
 
 // /admin/add-exhibition=> GET
 router.get('/add-exhibition', AdminController.getAddExhibition);
@@ -36,10 +36,10 @@ router.get('/edit-exhibition/:exhibitionID', AdminController.getEditExhibition);
 // /admin/edit-exhibition => POST
 router.post('/edit-exhibition/:exhibitionID',AdminController.postEditExhibition);
 
-// /admin/delete-exhibition => POST
+///admin/delete-exhibition => POST
 router.post('/delete-exhibition/',AdminController.postDeleteExhibition);
 
-/* ..... TRACKER .....*/
+// /* ..... TRACKER .....*/
 
 
 // /admin/add-tracker=> GET

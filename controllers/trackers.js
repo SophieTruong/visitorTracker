@@ -1,7 +1,7 @@
 const Tracker = require('../models/tracker');
 
 exports.getTrackers =  (req, res, next) => {
-    Tracker.fetchAll()
+    Tracker.find()
     .then(trackers=>{
       res.render('all-trackers/tracker-list', {
         trks: trackers,
@@ -23,5 +23,8 @@ exports.getTrackerPreview = (req, res) => {
 	.set('Accept', 'application/json')
 	.then(res => {
 	    console.log('yay got ' + JSON.stringify(res.body));
-	});
+  })
+  .catch(err=>{
+    console.log(err);
+  })
 };

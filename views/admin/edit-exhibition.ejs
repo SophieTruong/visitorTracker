@@ -5,9 +5,9 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-
+   <!-- enctype="multipart/form-data" -->
     <main>
-        <form class="/admin/<% if (editing) { %>edit-exhibition<% } else { %>add-exhibition<% } %>" method="POST" enctype="multipart/form-data">
+        <form class="/admin/<% if (editing) { %>edit-exhibition<% } else { %>add-exhibition<% } %>" method="POST">
             
             <div class="form-control">
                 <label for="name">Name</label>

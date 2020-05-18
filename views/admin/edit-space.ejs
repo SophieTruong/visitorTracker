@@ -5,33 +5,32 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-
+   <!-- enctype="multipart/form-data" -->
     <main>
-    <form class="space-form" action="/admin/<% if (editing) { %>edit-space<% } else { %>add-space<% } %>" method="POST" enctype="multipart/form-data">
+    <form class="space-form" action="/admin/<% if (editing) { %>edit-space<% } else { %>add-space<% } %>" method="POST" >
 
             <div class="form-control">
                 <label for="spaceName">Space Name</label>
                 <input type="text" name="spaceName" id="spaceName" 
-                value = "<% if (editing) { %><%= space.name %> <% } %>"
-                required>
+                value = "<% if (editing) { %><%= space.spaceName %> <% } %>">
             </div>
 
-            <div class="form-control">
+            <!-- <div class="form-control">
                 <label for="spaceID">Space ID</label>
                 <input type="text" name="spaceID" id="spaceID" 
                 value = "<% if (editing) { %><%= space.spaceID %> <% } %>"
                 required>
-            </div>
+            </div> -->
 
-            <!-- <div class="form-control">
+            <div class="form-control">
                 <label for="imageUrl">Image URL</label>
                 <input type="text" name="imageUrl" id="imageUrl"
-                value = "">
-            </div> -->
-            <div class = "form-control">
+                value = "<% if (editing) { %><%= space.imageUrl %> <% } %>">
+            </div>
+            <!-- <div class = "form-control">
                 <label for="image">Image</label>
                 <input type = "file" name = "image" id ="image">
-            </div>
+            </div> -->
             <% if (editing) {%> 
                 <input type = "hidden" value = "<%=space._id%>" name = "spcID">
             <% } %> 
