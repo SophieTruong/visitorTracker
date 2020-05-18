@@ -56,9 +56,6 @@ app.get('/tracker/api/', function (req, res) {
     if (req.body.action == 'tracker-preview') {
 	message = {"msg":"preview"};
 	image = 0;
-	while (image == 0) {
-	    ;
-	}
 	// after image is recived we should return page with the image here
     }        
 });
