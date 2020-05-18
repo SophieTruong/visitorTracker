@@ -25,8 +25,19 @@ const fileFilter = (req,file,cb) => {
     }
 }
 
+var storage2 = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'image')
+    },
+    filename: function (req, file, cb) {
+	//cb(null, file.originalname)
+	// this helps ensure the image us unique
+	cb(null, new Date().toISOString() + '-' + file.originalname) 
+    }
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({storage: storage,fileFilter: fileFilter}).single('image')) // upload an image for add space
+app.use(multer({storage: storage2,fileFilter: fileFilter}).single('image')) // upload an image for add space
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/',exhibitionRoutes);
@@ -51,16 +62,12 @@ app.get('/tracker/api/', function (req, res) {
     }        
 });
 
-// var multer = require('multer'); //I move this on top of the document
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-    cb(null, './previews/')
-    //cb(null, 'image')
+	cb(null, './previews/')
     },
     filename: function (req, file, cb) {
-    cb(null, file.originalname)
-    // this helps ensure the image us unique
-    // cb(null, new Date().toISOString() + '-' + file.originalname) 
+	cb(null, file.originalname)
     }
 });
 
