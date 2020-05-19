@@ -16,9 +16,18 @@ const exhibitionSchema = new Schema({
         type: Date,
         get: value => value.toDateString(),
         required:true
-    }
+    },
+    spaces:{
+        // spaces is an array -> syntax: spaces: [ ]
+        spaces:[{
+            spcId: {type: Schema.Types.ObjectId, ref: 'Space'},
 
-    // other relation: tracker , exhibition
+            // trackers is also an array
+            trckId: {
+                type: Schema.Types.ObjectId, 
+                ref: 'Tracker'},
+        }]
+    }
 });
 
 module.exports = mongoose.model('Exhibition',exhibitionSchema);

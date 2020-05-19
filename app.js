@@ -7,7 +7,11 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 
 const errorController = require('./controllers/error');
+/// 
 const Space = require('./models/space');
+const Exhibition = require('./models/exhibition');
+const Tracker = require('./models/tracker');
+
 //const mongoConnect =require('./utils/database').mongoConnect;
 
 const app = express();
@@ -47,10 +51,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // create 1 test space that connect to test tracker
 app.use((req,res,next)=>{
-    Space.findById('5ec2e9ffc4eac97c7f8ae3b9')
-        .then(space => {
-        req.space = space;
+    Exhibition.findById('5ec33707deeb019b8b742ff6')
+    .then(exhibition => {
+        req.exhibition = exhibition;
         next();
+    // Space.findById('5ec2e9ffc4eac97c7f8ae3b9')
+    //     .then(space => {
+    //     req.space = space;
+    //     next();
     })
     .catch(err => {
         console.log(err);
@@ -114,18 +122,32 @@ mongoose
     , { useUnifiedTopology: true })
     . then( result => {
         // create 1 test space that connect to test tracker
-        Space.findOne().then(space=>{
-            if (!space){
-                const testSpace = new Space({
-                    spaceName: 'Test Space',
-                    imageUrl: 'http://decorpunk.com/wp-content/uploads/2020/01/88794-TheatriumoftheS.jpg',
-                    trackers:{
-                        devices: []
+        // Space.findOne().then(space=>{
+        //     if (!space){
+        //         const testSpace = new Space({
+        //             spaceName: 'Test Space',
+        //             imageUrl: 'http://decorpunk.com/wp-content/uploads/2020/01/88794-TheatriumoftheS.jpg',
+        //             trackers:{
+        //                 devices: []
+        //             }
+        //         });
+        //         testSpace.save();
+        //     };
+        // })  
+
+        Exhibition.findOne().then(exhibition=>{
+            if (!exhibition){
+                const testExhibition = new Exhibition({
+                    name: 'Test Exhibition',
+                    startDate: '2020-05-01T00:00:00.000Z',
+                    endDate: '2020-05-30T00:00:00.000Z',
+                    exhLocations: {
+                        spaces: []
                     }
                 });
-                testSpace.save();
-            };
-        })  
+                testExhibition.save();
+            }
+        })
         app.listen(3000);  
     })
     .catch(err =>{

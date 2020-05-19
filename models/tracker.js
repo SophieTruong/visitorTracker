@@ -11,9 +11,14 @@ const trackerSchema = new Schema({
         type: String,
         required: true
     },
-    // id of the image
-    imagePreview:{
+    // TO DO: need to configure this to work with a fetch request
+    imagePreview:{ 
         type: String
+    },
+    // TO DO 
+    visitorCount:{
+        type: Number,
+        require: true
     },
     // other relation: space, exhibition
     spcId:{
@@ -21,7 +26,13 @@ const trackerSchema = new Schema({
         // refer to other models that this relate
         ref: 'Space',
         require: true
+    },
+    exhId:{
+        type: Schema.Types.ObjectId,
+        ref: 'Exhibition',
+        require: true
     }
+
 });
 
 module.exports = mongoose.model('Tracker',trackerSchema);

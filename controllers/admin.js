@@ -1,4 +1,5 @@
 /// allow admin actions: CRUD
+const mongoose = require('mongoose');
 
 const Space = require('../models/space');
 const Exhibition = require('../models/exhibition');
@@ -17,27 +18,13 @@ exports.postAddSpace = (req, res, next) => {
     const spaceName = req.body.spaceName;
     const imageUrl = req.body.imageUrl;
 
-    // if (!image){
-    //   return res.status(422).render('admin/edit-space',{
-    //       pageTitle: 'Add Space',
-    //       path: '/admin/add-space',
-    //       editing: false,
-    //       hasError: true,
-    //       space:{
-    //         name: spaceName,
-    //         spaceID: spaceID,
-    //       },
-    //       errorMessage: 'Attached file is not an image',
-    //       validationErrors: []
-    //   })
-    // }
-    //const imageUrl = 
-
-    //console.log('imageUrl' + image);
-
     const space = new Space({
       spaceName: spaceName,
-      imageUrl: imageUrl});
+      imageUrl: imageUrl,
+      status: 'available',
+      trckId: req.tracker,
+      exhId: req.exhibition
+    });
     space
       .save()
       .then(result =>{
@@ -114,7 +101,6 @@ exports.getAddExhibition = (req, res, next) => {
   });
 };
 
-
 exports.postAddExhibition = (req, res, next) => {
   const name = req.body.name;
   const startDate = req.body.startDate;
@@ -123,11 +109,13 @@ exports.postAddExhibition = (req, res, next) => {
   const exhibition = new Exhibition({
     name: name,
     startDate: startDate,
-    endDate: endDate
+    endDate: endDate,
+    spaces: []
   });
   exhibition
   .save()
   .then(result =>{
+      console.log(exhibition)
       console.log('New exhibition added');
       res.redirect('/');
   })
@@ -212,7 +200,10 @@ exports.postAddTracker = (req, res, next) => {
   const tracker = new Tracker({
     name: name,
     UUID: UUID,
-    spcId: req.space
+    imagePreview: null,
+    visitorCount: 0,
+    spcId: req.space,
+    exhId: req.exhibition
   });
   //console.log(space);
   tracker

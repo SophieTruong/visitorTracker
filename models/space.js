@@ -10,23 +10,24 @@ const spaceSchema = new Schema({
     imageUrl:{
         type: String
     },
+    status: {
+        type: String,
+        required: true
+    },
+
     // Relation 1 Space with multiple trackers
     trackers:{
         //store an array of tracker info
-        devices:[
-            {
-                trckId: {type: Schema.Types.ObjectId, ref: 'Tracker'},
-                // that tracker is exists or non-exist
-                status: {type: String}
-            }
-        ]
+        devices:[{
+            trckId: {type: Schema.Types.ObjectId, ref: 'Tracker'}
+        }]
     },
     // Relation 1 Space with 1 exhibition
-    exhibition:{
-        exhId: String,
+    exhId:{
+        type: Schema.Types.ObjectId,
+        ref:'Exhibition'
     }
 });
-
 
 
 module.exports = mongoose.model('Space',spaceSchema);
