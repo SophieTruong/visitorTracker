@@ -16,15 +16,23 @@ exports.getTrackers =  (req, res, next) => {
 
 
 const request = require('superagent');
-exports.getTrackerPreview = (req, res) => {
+exports.getTrackerPreview = (req, res, next) => {
     request
 	.get('localhost:3000/tracker/api/')
 	.send({ action: 'tracker-preview', id: 'string'})
 	.set('Accept', 'application/json')
 	.then(res => {
 	    //we should return te page here
-	    console.log('yay got ' + JSON.stringify(res.body));
-  })
+	    console.log('yay got ');
+	    next()
+	})
+	.then(TrackerPreview=> {
+	    res.render('all-trackers/tracker-preview', {
+		pageTitle: 'Preview',
+		path: '/all-trackers',
+	    });
+	})
+		
   .catch(err=>{
     console.log(err);
   })

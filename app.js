@@ -81,7 +81,6 @@ function waitAndRespond(res) {
 	return;
     }
     res.send('Hello world!');
-    console.log('send image');
 }
 
 app.get('/tracker/api/', function (req, res) {
