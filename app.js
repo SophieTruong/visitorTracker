@@ -94,10 +94,10 @@ app.get('/tracker/api/', function (req, res) {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-	cb(null, './previews/')
+	cb(null, './public/previews/')
     },
     filename: function (req, file, cb) {
-	cb(null, file.originalname)
+	cb(null, 'image.jpg')
     }
 });
 
