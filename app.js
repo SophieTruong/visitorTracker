@@ -140,7 +140,7 @@ mongoose
                 const testExhibition = new Exhibition({
                     name: 'Test Exhibition',
                     startDate: '2020-05-01T00:00:00.000Z',
-                    endDate: '2020-05-30T00:00:00.000Z',
+                    endDate: '2020-05-0T00:00:00.000Z',
                     exhLocations: {
                         spaces: []
                     }

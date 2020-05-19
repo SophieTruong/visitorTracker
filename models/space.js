@@ -25,9 +25,11 @@ const spaceSchema = new Schema({
     // Relation 1 Space with 1 exhibition
     exhId:{
         type: Schema.Types.ObjectId,
-        ref:'Exhibition'
+        ref:'Exhibition',
+        required:true
     }
 });
+
 
 
 module.exports = mongoose.model('Space',spaceSchema);

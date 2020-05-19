@@ -1,5 +1,4 @@
 /// allow admin actions: CRUD
-const mongoose = require('mongoose');
 
 const Space = require('../models/space');
 const Exhibition = require('../models/exhibition');
