@@ -15,10 +15,6 @@
                             <h1 class="space__title"><%= space.spaceName %></h1>
                         </header>
 
-                        <!-- <div class="card__content">
-                            <p class="space__description"><%= space.spaceID %></p>
-                        </div> -->
-
                         <div class="card__image">
                             <img src="<%= space.imageUrl %>"
                                 height= 200 px >
@@ -32,9 +28,10 @@
                                 <input type = "hidden" value = "<%=space._id%>" name = "spcID">
                                 <button class="btn" type="submit">Delete</button>
                             </form>
-
-                            <form action="/spaces/test-view" method="GET">
-                                <button class="btn">Test view</button>
+                               
+                            <form action="/spaces/add-to-exhibition" method="POST">
+                                <input type = "hidden" value = "<%=space._id%>" name = "spcID">
+                                <button class="btn" type="submit">Add To Exhibition</button>
                             </form>
 
                         </div>

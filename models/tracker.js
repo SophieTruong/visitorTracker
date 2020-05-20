@@ -11,26 +11,20 @@ const trackerSchema = new Schema({
         type: String,
         required: true
     },
-    // TO DO: need to configure this to work with a fetch request
-    imagePreview:{ 
-        type: String
-    },
     // TO DO 
     visitorCount:{
         type: Number,
-        require: true
+        required: true
     },
-    // other relation: space, exhibition
     spcId:{
         type: Schema.Types.ObjectId,
         // refer to other models that this relate
         ref: 'Space',
-        require: true
     },
     exhId:{
         type: Schema.Types.ObjectId,
         ref: 'Exhibition',
-        require: true
+        //required: true
     }
 
 });

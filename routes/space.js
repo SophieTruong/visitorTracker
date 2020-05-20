@@ -8,5 +8,6 @@ const router = express.Router();
 
 
 router.get('/all-space',spacesController.getSpaces);
+router.post('/add-to-exhibition',spacesController.postAddToExh);
 
 module.exports = router;

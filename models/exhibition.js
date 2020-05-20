@@ -20,15 +20,45 @@ const exhibitionSchema = new Schema({
     spaces:{
         // spaces is an array -> syntax: spaces: [ ]
         spaces:[{
-            spcId: {type: Schema.Types.ObjectId, ref: 'Space'},
-
-            // trackers is also an array
-            trckId: {
-                type: Schema.Types.ObjectId, 
-                ref: 'Tracker'},
+            spcId: {type: Schema.Types.ObjectId, ref: 'Space'}
         }]
     }
 });
+
+exhibitionSchema.methods.addToExhibition = function(space){
+    if(!space){
+        return ('Space not found');
+    } else {
+        const exhSpaceIndex = this.spaces.spaces.findIndex(es =>{
+            console.log(es.spcId)
+            console.log(space._id);
+            return es.spcId.toString() === space._id.toString();
+        });
+        const updatedExhSpaces = [...this.spaces.spaces];
+    
+        if (exhSpaceIndex >=0){
+            console.log(exhSpaceIndex)
+            console.log('Space is already used in to this exhibition');
+        } else {
+            updatedExhSpaces.push({spcId: space._id});
+        }
+        const updatedSpaces = { spaces : updatedExhSpaces};
+        this.spaces = updatedSpaces;
+        return this.save();
+    }
+    
+};
+
+exhibitionSchema.methods.removeFromExhibition = function(spcId){
+    const updatedExhSpaces = this.spaces.spaces.filter(space => {
+        console.log(this);
+        console.log(space);
+        return space.spcId.toString()!== spcId.toString();
+    })
+    this.spaces.spaces = updatedExhSpaces;
+    // console.log(this)
+    return this.save();
+}
 
 module.exports = mongoose.model('Exhibition',exhibitionSchema);
 

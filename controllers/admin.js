@@ -21,7 +21,7 @@ exports.postAddSpace = (req, res, next) => {
       spaceName: spaceName,
       imageUrl: imageUrl,
       status: 'available',
-      trckId: req.tracker,
+      trackers: [],
       exhId: req.exhibition
     });
     space
@@ -81,14 +81,25 @@ exports.postEditSpace = (req,res,next) =>{
 }
 exports.postDeleteSpace = (req,res,next) =>{
   const spcID = req.body.spcID;
+  req.exhibition
+  .removeFromExhibition(spcID)
+  .then(result =>{
+    console.log(result);
+
+  })
+  .catch(err =>{
+    console.log(err);
+  });
   Space.findByIdAndDelete(spcID)
-    .then(result =>{
-      console.log('Deleted space');
-      res.redirect("/spaces/all-space");
-    })
-    .catch(err =>{
-      console.log(err);
-    });
+  .then(result =>{
+    console.log('Deleted space');
+    res.redirect("/spaces/all-space");
+  })
+  .catch(err =>{
+    console.log(err);
+  });
+
+  
 };
 
 // /* ..... EXHIBITION .....*/
@@ -186,6 +197,7 @@ exports.postDeleteExhibition = (req,res,next) =>{
 // /* ..... TRACKER .....*/
 
 exports.getAddTracker = (req, res, next) => {
+  const spcID = req.params;
   res.render('admin/edit-tracker', {
     pageTitle: 'Add Tracker',
     path: '/admin/add-tracker',
@@ -196,15 +208,16 @@ exports.getAddTracker = (req, res, next) => {
 exports.postAddTracker = (req, res, next) => {
   const name = req.body.name;
   const UUID = req.body.UUID;
+
   const tracker = new Tracker({
     name: name,
     UUID: UUID,
-    imagePreview: null,
     visitorCount: 0,
     spcId: req.space,
     exhId: req.exhibition
   });
-  //console.log(space);
+  console.log(tracker);
+
   tracker
   .save()
   .then(result =>{

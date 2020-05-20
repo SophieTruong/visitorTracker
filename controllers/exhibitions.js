@@ -1,4 +1,5 @@
 const Exhibition = require('../models/exhibition');
+const Space = require('../models/space');
 
 
 exports.getExhibition = (req,res,next) =>{

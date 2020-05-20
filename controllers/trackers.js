@@ -1,4 +1,7 @@
 const Tracker = require('../models/tracker');
+const Space = require('../models/space');
+const Exhibition = require('../models/exhibition');
+
 
 exports.getTrackers =  (req, res, next) => {
     Tracker.find()
@@ -13,7 +16,6 @@ exports.getTrackers =  (req, res, next) => {
       console.log(err);
     })
 };
-
 
 const request = require('superagent');
 exports.getTrackerPreview = (req, res, next) => {
